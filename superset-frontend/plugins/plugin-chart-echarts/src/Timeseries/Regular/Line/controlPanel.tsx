@@ -42,6 +42,11 @@ import {
   xAxisBounds,
   xAxisLabelRotation,
 } from '../../../controls';
+import {
+  createAxisControl,
+  orientationControls,
+  titleControls,
+} from '../../controls';
 
 const {
   area,
@@ -62,7 +67,8 @@ const config: ControlPanelConfig = {
     sections.advancedAnalyticsControls,
     sections.annotationsAndLayersControls,
     sections.forecastIntervalControls,
-    sections.titleControls,
+    orientationControls,
+    titleControls,
     {
       label: t('Chart Options'),
       expanded: true,
@@ -172,6 +178,7 @@ const config: ControlPanelConfig = {
         [minorTicks],
         ...legendSection,
         [<ControlSubSectionHeader>{t('X Axis')}</ControlSubSectionHeader>],
+        ...createAxisControl('x'),
         [
           {
             name: 'x_axis_time_format',
@@ -186,6 +193,7 @@ const config: ControlPanelConfig = {
         ...richTooltipSection,
         // eslint-disable-next-line react/jsx-key
         [<ControlSubSectionHeader>{t('Y Axis')}</ControlSubSectionHeader>],
+        ...createAxisControl('y'),
         ['y_axis_format'],
         ['currency_format'],
         [
