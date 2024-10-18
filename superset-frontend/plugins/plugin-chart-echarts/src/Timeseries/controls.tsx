@@ -19,8 +19,10 @@
 import { t } from '@superset-ui/core';
 import {
   ControlPanelsContainerProps,
+  ControlPanelSectionConfig,
   ControlSetRow,
   ControlStateMapping,
+  ControlSubSectionHeader,
   D3_TIME_FORMAT_DOCS,
   formatSelectOptions,
   sections,
@@ -31,7 +33,7 @@ import { xAxisLabelRotation } from '../controls';
 import { OrientationType } from './types';
 import { DEFAULT_FORM_DATA, TIME_SERIES_DESCRIPTION_TEXT } from './constants';
 
-const { logAxis, minorSplitLine, truncateYAxis, yAxisBounds } =
+const { logAxis, minorSplitLine, truncateYAxis, yAxisBounds, orientation } =
   DEFAULT_FORM_DATA;
 
 export function createAxisTitleControl(axis: 'x' | 'y'): ControlSetRow[] {
@@ -228,3 +230,38 @@ export function createAxisControl(axis: 'x' | 'y'): ControlSetRow[] {
     ],
   ];
 }
+
+export const orientationControls: ControlPanelSectionConfig = {
+  label: t('Chart Orientation'),
+  expanded: true,
+  controlSetRows: [
+    [
+      {
+        name: 'orientation',
+        config: {
+          type: 'RadioButtonControl',
+          renderTrigger: true,
+          label: t('Bar orientation'),
+          default: orientation,
+          options: [
+            [OrientationType.Vertical, t('Vertical')],
+            [OrientationType.Horizontal, t('Horizontal')],
+          ],
+          description: t('Orientation of bar chart'),
+        },
+      },
+    ],
+  ],
+};
+
+export const titleControls: ControlPanelSectionConfig = {
+  label: t('Chart Title'),
+  tabOverride: 'customize',
+  expanded: true,
+  controlSetRows: [
+    [<ControlSubSectionHeader>{t('X Axis')}</ControlSubSectionHeader>],
+    ...createAxisTitleControl('x'),
+    [<ControlSubSectionHeader>{t('Y Axis')}</ControlSubSectionHeader>],
+    ...createAxisTitleControl('y'),
+  ],
+};
