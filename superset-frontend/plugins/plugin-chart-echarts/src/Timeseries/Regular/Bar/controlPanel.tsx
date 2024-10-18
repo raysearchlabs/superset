@@ -33,12 +33,15 @@ import {
   xAxisBounds,
 } from '../../../controls';
 
-import { OrientationType } from '../../types';
 import { DEFAULT_FORM_DATA } from '../../constants';
 
-import { createAxisTitleControl, createAxisControl } from '../../controls';
+import {
+  createAxisControl,
+  orientationControls,
+  titleControls,
+} from '../../controls';
 
-const { zoomable, orientation } = DEFAULT_FORM_DATA;
+const { zoomable } = DEFAULT_FORM_DATA;
 
 const config: ControlPanelConfig = {
   controlPanelSections: [
@@ -46,39 +49,8 @@ const config: ControlPanelConfig = {
     sections.advancedAnalyticsControls,
     sections.annotationsAndLayersControls,
     sections.forecastIntervalControls,
-    {
-      label: t('Chart Orientation'),
-      expanded: true,
-      controlSetRows: [
-        [
-          {
-            name: 'orientation',
-            config: {
-              type: 'RadioButtonControl',
-              renderTrigger: true,
-              label: t('Bar orientation'),
-              default: orientation,
-              options: [
-                [OrientationType.Vertical, t('Vertical')],
-                [OrientationType.Horizontal, t('Horizontal')],
-              ],
-              description: t('Orientation of bar chart'),
-            },
-          },
-        ],
-      ],
-    },
-    {
-      label: t('Chart Title'),
-      tabOverride: 'customize',
-      expanded: true,
-      controlSetRows: [
-        [<ControlSubSectionHeader>{t('X Axis')}</ControlSubSectionHeader>],
-        ...createAxisTitleControl('x'),
-        [<ControlSubSectionHeader>{t('Y Axis')}</ControlSubSectionHeader>],
-        ...createAxisTitleControl('y'),
-      ],
-    },
+    orientationControls,
+    titleControls,
     {
       label: t('Chart Options'),
       expanded: true,
