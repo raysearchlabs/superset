@@ -245,16 +245,13 @@ describe('Time range filter', () => {
     cy.visitChartByParams(formData);
     cy.verifySliceSuccess({ waitAlias: '@chartData' });
 
-    cy.get('[data-test=time-range-trigger]')
-      .click()
-      .then(() => {
-        cy.get('[data-test=custom-frame]').then(() => {
-          cy.get('.ant-input-number-input-wrap > input')
-            .invoke('attr', 'value')
-            .should('eq', '7');
-        });
-        cy.get('[data-test=cancel-button]').click();
-      });
+    cy.get('[data-test=time-range-trigger]').click();
+    cy.get('[data-test=custom-frame]').then(() => {
+      cy.get('.antd5-input-number-input-wrap > input')
+        .invoke('attr', 'value')
+        .should('eq', '7');
+    });
+    cy.get('[data-test=cancel-button]').click();
   });
 
   it('No filter time_range params', () => {
